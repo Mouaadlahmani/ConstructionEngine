@@ -14,11 +14,12 @@ public class TestDao {
 		
 		System.out.println(p1.toString());
 	}*/
-		/*
-		 * dao.deleteProject(8); List<Projet> projets = dao.afficherProject();
-		 * for(Projet p:projets) { System.out.println(p.toString()); }
-		 * 
-		 */
+		
+		  dao.deleteProject(5);
+		  List<Projet> projets = dao.afficherProject();
+		  for(Projet p:projets) { System.out.println(p.toString()); }
+		  
+		 
 		
 	}
 }

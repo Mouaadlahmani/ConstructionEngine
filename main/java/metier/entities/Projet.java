@@ -1,44 +1,43 @@
 package metier.entities;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Projet {
 	
-	private int project_id;
-	private String project_name;
-	private String project_description;
+	private int projet_id;
+	private String nom;
+	private String description;
 	private Date dateDebut;
 	private Date dateFin;
 	private double budget;
 	public Projet() {
 		super();
 	}
-	public Projet(String project_name, String project_description, Date dateDebut, Date dateFin,
-			double budget) {
+	public Projet(String nom, String description, Date dateDebut, Date dateFin, double budget) {
 		super();
-		this.project_name = project_name;
-		this.project_description = project_description;
+		this.nom = nom;
+		this.description = description;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.budget = budget;
 	}
-	public int getProject_id() {
-		return project_id;
+	public int getProjet_id() {
+		return projet_id;
 	}
-	public void setProject_id(int project_id) {
-		this.project_id = project_id;
+	public void setProjet_id(int projet_id) {
+		this.projet_id = projet_id;
 	}
-	public String getProject_name() {
-		return project_name;
+	public String getNom() {
+		return nom;
 	}
-	public void setProject_name(String project_name) {
-		this.project_name = project_name;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
-	public String getProject_description() {
-		return project_description;
+	public String getDescription() {
+		return description;
 	}
-	public void setProject_description(String project_description) {
-		this.project_description = project_description;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public Date getDateDebut() {
 		return dateDebut;
@@ -60,10 +59,10 @@ public class Projet {
 	}
 	@Override
 	public String toString() {
-		return "projet [projet_id=" + project_id + ", nom=" + project_name + ", description="
-				+ project_description + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", budget=" + budget
-				+ "]";
+		return "Projet [projet_id=" + projet_id + ", nom=" + nom + ", description=" + description + ", dateDebut="
+				+ dateDebut + ", dateFin=" + dateFin + ", budget=" + budget + "]";
 	}
 	
-	 
+	
+	
 }

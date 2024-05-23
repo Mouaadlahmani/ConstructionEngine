@@ -6,10 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import dao.SingletonConnection;
-
-import java.sql.Date;
+import java.util.Date;
 import metier.entities.Projet;
 
 public class ProjetDaoImpl implements IprojetDao {
@@ -19,17 +16,17 @@ public class ProjetDaoImpl implements IprojetDao {
 		Connection connection = SingletonConnection.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO projets(nom, description, dateDebut, dateFin, budget) VALUES(?,?,?,?,?)");
-			ps.setString(1, p.getProject_name());
-			ps.setString(2, p.getProject_description());
-			ps.setDate(3, p.getDateDebut());
-			ps.setDate(4, p.getDateFin());
+			ps.setString(1, p.getNom());
+			ps.setString(2, p.getDescription());
+			ps.setDate(3, new java.sql.Date(p.getDateDebut().getTime()));
+			ps.setDate(4, new java.sql.Date(p.getDateFin().getTime()));
 			ps.setDouble(5, p.getBudget());
 			ps.executeUpdate();
 			PreparedStatement ps2=connection.prepareStatement
 					("SELECT MAX(projet_id) AS MAX_ID FROM projets");
 			ResultSet rs=ps2.executeQuery();
 			if(rs.next()) {
-				p.setProject_id(rs.getInt("MAX_ID"));
+				p.setProjet_id(rs.getInt("MAX_ID"));
 			}
 			ps.close();
 		}catch (SQLException e) {
@@ -48,11 +45,11 @@ public class ProjetDaoImpl implements IprojetDao {
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Projet p = new Projet();
-				p.setProject_id(rs.getInt("projet_id"));
-				p.setProject_name(rs.getString("nom"));
+				p.setProjet_id(rs.getInt("projet_id"));
+				p.setNom(rs.getString("nom"));
 				p.setDateDebut(rs.getDate("dateDebut"));
 				p.setDateFin(rs.getDate("dateFin"));
-				p.setProject_description(rs.getString("description"));
+				p.setDescription(rs.getString("description"));;
 				p.setBudget(rs.getDouble("budget"));
 				projects.add(p);
 			}

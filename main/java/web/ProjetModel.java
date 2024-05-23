@@ -6,13 +6,15 @@ import java.util.List;
 import metier.entities.Projet;
 
 public class ProjetModel {
-	private List<Projet> projet=new ArrayList<Projet>();
+	private List<Projet> projets=new ArrayList<Projet>();
 
-	public List<Projet> getProjet() {
-		return projet;
+	public List<Projet> getProjets() {
+		return projets;
 	}
 
-	public void setProjet(List<Projet> projet) {
-		this.projet = projet;
+	public void setProjets(List<Projet> projets) {
+		this.projets = projets;
 	}
+
+
 }
