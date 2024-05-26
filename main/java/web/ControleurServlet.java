@@ -52,16 +52,22 @@ public class ControleurServlet extends HttpServlet {
 			response.sendRedirect("home");
 		}else if(path.equals("/modifier")) {
 			int id = Integer.parseInt(request.getParameter("id"));
-	        String nom = request.getParameter("nom");
+			Projet p = metier.getProject(id);
+			request.setAttribute("projet", p);
+	        response.sendRedirect("jsp/modifier.jsp");
+		}else if (path.equals("/update") && (request.getMethod().equals("POST"))) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			String nom = request.getParameter("nom");
 	        String description = request.getParameter("description");
 	        Date dateDebut = Date.valueOf(request.getParameter("dateDebut"));
 	        Date dateFin = Date.valueOf(request.getParameter("dateFin"));
 	        double budget = Double.parseDouble(request.getParameter("budget"));
 
-	        Projet updatedProject = new Projet(nom, description, dateDebut, dateFin, budget);
-	        metier.updateProject(id,updatedProject);
-	        response.sendRedirect(request.getContextPath() + "/home");
-		}
+	        Projet newProject = new Projet(nom, description, dateDebut, dateFin, budget);
+	        newProject.setProjet_id(id);
+	        metier.updateProject(newProject);
+	        request.getRequestDispatcher("home").forward(request, response);
+	        }
 	}
 
 	@Override
