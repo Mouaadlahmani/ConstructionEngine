@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 23/05/2024
-  Time: 12:23
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -27,7 +20,7 @@
     </div>
 </nav>
 <div class="container1">
-    <form method="post" action="projet.jsp">
+    <form action="ajouterProjet" method="post" >
         <!-- 2 column grid layout with text inputs for the first and last names -->
         <div class="row mb-4">
             <div class="col">
@@ -63,7 +56,7 @@
         </div>
 
         <!-- Submit button -->
-        <button type="button" class="btn btn-warning">
+        <button type="submit" class="btn btn-warning">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"></path>
             </svg>

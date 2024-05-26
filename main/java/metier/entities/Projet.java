@@ -1,6 +1,6 @@
 package metier.entities;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Projet {
 	

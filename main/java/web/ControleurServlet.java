@@ -5,23 +5,19 @@ import dao.ProjetDaoImpl;
 import metier.entities.Projet;
 import dao.SingletonConnection;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+import javax.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.text.ParseException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import metier.entities.Projet;
-@WebServlet(name = "ControleurServlet", value = "/ControleurServlet")
+@WebServlet
 public class ControleurServlet extends HttpServlet {
 	private ProjetDaoImpl metier;
 
@@ -38,51 +34,27 @@ public class ControleurServlet extends HttpServlet {
 			List<Projet> projet = metier.afficherProject();
 			request.setAttribute("model", projet);
 			request.getRequestDispatcher("jsp/projet.jsp").forward(request, response);
-
 		} else if (path.equals("/ajouter")) {
 			request.getRequestDispatcher("jsp/ajouter.jsp").forward(request, response);
+		} else if (path.equals("/ajouterProjet") && (request.getMethod().equals("POST"))) {
+			String nom = request.getParameter("nom");
+	        String description = request.getParameter("description");
+	        Date dateDebut = Date.valueOf(request.getParameter("dateDebut"));
+	        Date dateFin = Date.valueOf(request.getParameter("dateFin"));
+	        double budget = Double.parseDouble(request.getParameter("budget"));
+
+	        Projet newProject = new Projet(nom, description, dateDebut, dateFin, budget);
+	        metier.saveProject(newProject);
+	        request.getRequestDispatcher("/home").forward(request, response);
+		} else if (path.equals("/suprimer")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			metier.deleteProject(id);
+			response.sendRedirect("home");
 		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String nomProjet = request.getParameter("nomProjet");
-		String description = request.getParameter("description");
-		String dateDebutStr = request.getParameter("dateDebut");
-		String dateFinStr = request.getParameter("dateFin");
-		String budgetStr = request.getParameter("budget");
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-		try {
-			Date dateDebut = dateFormat.parse(dateDebutStr);
-			Date dateFin = dateFormat.parse(dateFinStr);
-			double budget = Double.parseDouble(budgetStr);
-
-			Projet projet = new Projet();
-			projet.setNom(nomProjet);
-			projet.setDescription(description);
-			projet.setDateDebut(dateDebut);
-			projet.setDateFin(dateFin);
-			projet.setBudget(budget);
-
-			try (Connection connection = SingletonConnection.getConnection()) {
-				ProjetDaoImpl daoProjet = new ProjetDaoImpl();
-				daoProjet.saveProject(projet);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-			response.sendRedirect("success.html");
-		} catch (ParseException | NumberFormatException e) {
-			e.printStackTrace();
-			response.sendRedirect("error.html");
-		}
-
-		String path = request.getServletPath();
-		if(path.equals("/ajouter")) {
-			request.getRequestDispatcher("jsp/home.jsp").forward(request, response);
-		}
+		doGet(request, response);
 	}
 }
