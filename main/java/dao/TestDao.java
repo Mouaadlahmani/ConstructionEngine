@@ -14,7 +14,7 @@ public class TestDao {
 		
 		System.out.println(p1.toString());
 	}*/
-		
+		dao.deleteProject(12);
 		  List<Projet> projets = dao.afficherProject();
 		  for(Projet p:projets) { System.out.println(p.toString()); }
 		  

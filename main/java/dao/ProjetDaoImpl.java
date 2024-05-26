@@ -70,9 +70,23 @@ public class ProjetDaoImpl implements IprojetDao {
 	}
 
 	@Override
-	public Projet updateProject(Projet p) {
-		// TODO Auto-generated method stub
-		return null;
+	public Projet updateProject(int id,Projet p) {
+		Connection connection = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement("UPDATE projets SET nom = ?, description = ?, dateDebut = ?, dateFin = ?, budget = ? WHERE projet_id = ?");
+			ps.setString(1, p.getNom());
+	        ps.setString(2, p.getDescription());
+	        ps.setDate(3, p.getDateDebut());
+	        ps.setDate(4, p.getDateFin());
+	        ps.setDouble(5, p.getBudget());
+	        ps.setInt(6, id);
+	        ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return p;
 	}
 
 	@Override
